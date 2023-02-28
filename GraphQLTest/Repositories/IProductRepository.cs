@@ -6,7 +6,7 @@ namespace GraphQLTest.Repositories
     public interface IProductRepository
     {
         List<Product> GetAll();
-        Product Create(Product product);
+        Task<Product> Create(Product product);
     }
 }
 

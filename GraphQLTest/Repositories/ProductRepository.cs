@@ -18,10 +18,10 @@ namespace GraphQLTest.Repositories
             return _context.Products.ToList();
         }
 
-        public Product Create(Product product)
+        public async Task<Product> Create(Product product)
         {
-            _context.Products.Add(product);
-            _context.SaveChanges();
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
             return product;
         }
 

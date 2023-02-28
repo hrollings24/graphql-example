@@ -24,7 +24,7 @@ public class ProductController : ControllerBase
     [HttpPost]
     public ActionResult<Product> CreateNew(Product product)
     {
-        return _productRepository.Create(product);
+        return _productRepository.Create(product).GetAwaiter().GetResult();
     }
 }
 
