@@ -17,11 +17,10 @@ builder.Services.AddDbContext<MyDatabaseContext>(o => o.UseNpgsql(builder.Config
 
 builder.Services
     .AddScoped<IProductRepository, ProductRepository>()
+    .AddScoped<IExtendedPropertyRepository, ExtendedPropertyRepository>()
     .AddScoped<Query>()
     .AddGraphQLServer()
     .AddQueryType<Query>();
-
-
 
 var app = builder.Build();
 

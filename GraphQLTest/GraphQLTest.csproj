@@ -27,10 +27,12 @@
     <None Remove="Entities\" />
     <None Remove="Repositories\" />
     <None Remove="Resolvers\" />
+    <None Remove="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
     <Folder Include="Repositories\" />
     <Folder Include="Resolvers\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>

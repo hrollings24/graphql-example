@@ -9,6 +9,7 @@ namespace GraphQLTest
     public class MyDatabaseContext : DbContext
     {
         public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<ExtendedProperties> ExtendedProperties { get; set; } = null!;
 
         public MyDatabaseContext(DbContextOptions<MyDatabaseContext> options)
             : base(options) { }
