@@ -25,9 +25,17 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Product> CreateNew(Product product)
+    public ActionResult<Product> CreateNew(CreateProductRequest product)
     {
-        return _productRepository.Create(product).GetAwaiter().GetResult();
+        var productEntity = new Product()
+        {
+            Id = Guid.NewGuid(),
+            Description = product.Description,
+            Title = product.Title,
+            Price = product.Price
+        };
+
+        return _productRepository.Create(productEntity).GetAwaiter().GetResult();
     }
 
     [HttpGet("{id}/extendedproperties")]

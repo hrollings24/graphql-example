@@ -1,14 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GraphQLTest.Entities
+namespace GraphQLTest.Models
 {
-	public class Product
+	public class CreateProductRequest
 	{
-        [Key]
-        public Guid Id { get; set; }
-
         [Required]
         public string Title { get; set; } = string.Empty;
 
@@ -17,9 +13,6 @@ namespace GraphQLTest.Entities
 
         [Required]
         public decimal Price { get; set; }
-
-        public virtual ICollection<ExtendedProperties> ExtendedProperties { get; set; }
-
     }
 }
 

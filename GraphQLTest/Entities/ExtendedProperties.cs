@@ -9,10 +9,6 @@ namespace GraphQLTest.Entities
 		[Key]
 		public Guid Id { get; set; }
 
-        [ForeignKey("ProductId")]
-        public Product Product { get; set; }
-        public Guid ProductId { get; set; }
-
         [Required]
 		public string Name { get; set; }
 
@@ -21,6 +17,11 @@ namespace GraphQLTest.Entities
 
         [Required]
         public string Value { get; set; }
-	}
+
+        [ForeignKey(nameof(ProductId))]
+        public virtual Product Product { get; set; }
+
+        public Guid ProductId { get; set; }
+    }
 }
 

@@ -75,12 +75,17 @@ namespace GraphQLTest.Migrations
             modelBuilder.Entity("GraphQLTest.Entities.ExtendedProperties", b =>
                 {
                     b.HasOne("GraphQLTest.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("ExtendedProperties")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("GraphQLTest.Entities.Product", b =>
+                {
+                    b.Navigation("ExtendedProperties");
                 });
 #pragma warning restore 612, 618
         }

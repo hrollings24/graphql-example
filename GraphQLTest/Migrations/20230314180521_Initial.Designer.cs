@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GraphQLTest.Migrations
 {
     [DbContext(typeof(MyDatabaseContext))]
-    [Migration("20230228213936_addEPTable")]
-    partial class addEPTable
+    [Migration("20230314180521_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,9 @@ namespace GraphQLTest.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text");
@@ -44,6 +47,8 @@ namespace GraphQLTest.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ExtendedProperties");
                 });
@@ -68,6 +73,22 @@ namespace GraphQLTest.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("GraphQLTest.Entities.ExtendedProperties", b =>
+                {
+                    b.HasOne("GraphQLTest.Entities.Product", "Product")
+                        .WithMany("ExtendedProperties")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("GraphQLTest.Entities.Product", b =>
+                {
+                    b.Navigation("ExtendedProperties");
                 });
 #pragma warning restore 612, 618
         }

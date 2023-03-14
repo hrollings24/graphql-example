@@ -13,14 +13,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<MyDatabaseContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("graphqldb")));
+builder.Services.AddPooledDbContextFactory<MyDatabaseContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("graphqldb")));
 
 builder.Services
     .AddScoped<IProductRepository, ProductRepository>()
     .AddScoped<IExtendedPropertyRepository, ExtendedPropertyRepository>()
-    .AddScoped<Query>()
     .AddGraphQLServer()
-    .AddQueryType<Query>();
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>();
 
 var app = builder.Build();
 

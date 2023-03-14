@@ -1,31 +1,33 @@
 ﻿using System;
 using GraphQLTest.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace GraphQLTest.Repositories
 {
     public class ExtendedPropertyRepository : IExtendedPropertyRepository
     {
-        private readonly MyDatabaseContext _context;
+        private readonly IDbContextFactory<MyDatabaseContext> _contextFactory;
 
-
-        public ExtendedPropertyRepository(MyDatabaseContext context)
+        public ExtendedPropertyRepository(IDbContextFactory<MyDatabaseContext> contextFactory)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
         }
 
         public List<ExtendedProperties> GetAll(Guid productId)
         {
-            return _context.ExtendedProperties.Where(x => x.ProductId == productId).ToList();
+            using MyDatabaseContext context = _contextFactory.CreateDbContext();
+
+            return context.ExtendedProperties.Where(x => x.ProductId == productId).ToList();
         }
 
         public async Task<ExtendedProperties> Create(ExtendedProperties exp)
         {
-            await _context.ExtendedProperties.AddAsync(exp);
-            await _context.SaveChangesAsync();
+            using MyDatabaseContext context = _contextFactory.CreateDbContext();
+
+            await context.ExtendedProperties.AddAsync(exp);
+            await context.SaveChangesAsync();
             return exp;
         }
-
-
     }
 }
 
