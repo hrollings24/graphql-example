@@ -31,7 +31,8 @@ builder.Services
     .AddScoped<ExtendedPropertyDataLoader>()
     .AddGraphQLServer()
     .AddQueryType<Query>()
-    .AddMutationType<Mutation>();
+    .AddMutationType<Mutation>()
+    .AddFiltering();
 
 var app = builder.Build();
 
