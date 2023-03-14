@@ -5,8 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraphQLTest.Models
 {
-	public class CreateExtendedPropertiesRequest
+	public class ExtendedPropertyModel
 	{
+        [Key]
+        public Guid Id { get; set; }
+
         [Required]
         public string Name { get; set; }
 
@@ -16,8 +19,10 @@ namespace GraphQLTest.Models
         [Required]
         public string Value { get; set; }
 
-        [Required]
-        public string ProductId { get; set; }
+        [ForeignKey(nameof(ProductId))]
+        public virtual Product Product { get; set; }
+
+        public Guid ProductId { get; set; }
     }
 }
 

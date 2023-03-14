@@ -1,4 +1,5 @@
-﻿using GraphQLTest;
+﻿using AutoMapper;
+using GraphQLTest;
 using GraphQLTest.Repositories;
 using GraphQLTest.Resolvers;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 builder.Services.AddPooledDbContextFactory<MyDatabaseContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("graphqldb")));
 

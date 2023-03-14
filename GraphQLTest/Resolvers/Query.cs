@@ -1,5 +1,6 @@
 ﻿using System;
 using GraphQLTest.Entities;
+using GraphQLTest.Models;
 using GraphQLTest.Repositories;
 
 namespace GraphQLTest.Resolvers
@@ -15,16 +16,16 @@ namespace GraphQLTest.Resolvers
             _extendedPropertyRepository = extendedPropertyRepository;
         }
 
-        public List<Product> GetProducts() =>
+        public List<ProductModel> GetProducts() =>
             _productRepository.GetAll();
 
-        public Product GetProductById(Guid id) =>
+        public ProductModel GetProductById(Guid id) =>
             _productRepository.GetAll().FirstOrDefault(x => x.Id == id);
 
-        public List<ExtendedProperties> GetExtendedProperties(Guid id) =>
+        public List<ExtendedPropertyModel> GetExtendedProperties(Guid id) =>
             _extendedPropertyRepository.GetAll(id);
 
-        public ExtendedProperties GetExtendedPropertiesById(Guid productId, Guid id) =>
+        public ExtendedPropertyModel GetExtendedPropertiesById(Guid productId, Guid id) =>
             _extendedPropertyRepository.GetAll(productId).FirstOrDefault(x => x.Id == id);
     }
 }

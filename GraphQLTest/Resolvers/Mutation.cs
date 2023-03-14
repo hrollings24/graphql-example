@@ -16,9 +16,9 @@ namespace GraphQLTest.Resolvers
             _extendedPropertyRepository = extendedPropertyRepository;
         }
 
-        public async Task<Product> CreateProduct(CreateProductRequest request)
+        public async Task<ProductModel> CreateProduct(CreateProductRequest request)
 		{
-            var productEntity = new Product()
+            var productEntity = new ProductModel()
             {
                 Id = Guid.NewGuid(),
                 Description = request.Description,
@@ -28,6 +28,20 @@ namespace GraphQLTest.Resolvers
 
             return await _productRepository.Create(productEntity);
         }
-	}
+
+        public async Task<ExtendedPropertyModel> CreateExtendedProperty(CreateExtendedPropertiesRequest request)
+        {
+            var epEntity = new ExtendedPropertyModel()
+            {
+                Id = Guid.NewGuid(),
+                Name = request.Name,
+                Value = request.Value,
+                Type = request.Type,
+                ProductId = Guid.Parse(request.ProductId)
+            };
+
+            return await _extendedPropertyRepository.Create(epEntity);
+        }
+    }
 }
 

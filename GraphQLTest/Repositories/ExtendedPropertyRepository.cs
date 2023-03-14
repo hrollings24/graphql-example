@@ -1,5 +1,7 @@
 ﻿using System;
+using AutoMapper;
 using GraphQLTest.Entities;
+using GraphQLTest.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GraphQLTest.Repositories
@@ -7,24 +9,29 @@ namespace GraphQLTest.Repositories
     public class ExtendedPropertyRepository : IExtendedPropertyRepository
     {
         private readonly IDbContextFactory<MyDatabaseContext> _contextFactory;
+        private readonly IMapper _mapper;
 
-        public ExtendedPropertyRepository(IDbContextFactory<MyDatabaseContext> contextFactory)
+        public ExtendedPropertyRepository(IDbContextFactory<MyDatabaseContext> contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public List<ExtendedProperties> GetAll(Guid productId)
+        public List<ExtendedPropertyModel> GetAll(Guid productId)
         {
             using MyDatabaseContext context = _contextFactory.CreateDbContext();
 
-            return context.ExtendedProperties.Where(x => x.ProductId == productId).ToList();
+            var eps = context.ExtendedProperties.Where(x => x.ProductId == productId).ToList();
+            return _mapper.Map<List<ExtendedPropertyModel>>(eps);
         }
 
-        public async Task<ExtendedProperties> Create(ExtendedProperties exp)
+        public async Task<ExtendedPropertyModel> Create(ExtendedPropertyModel exp)
         {
             using MyDatabaseContext context = _contextFactory.CreateDbContext();
 
-            await context.ExtendedProperties.AddAsync(exp);
+            var ep = _mapper.Map<ExtendedProperties>(exp);
+
+            await context.ExtendedProperties.AddAsync(ep);
             await context.SaveChangesAsync();
             return exp;
         }

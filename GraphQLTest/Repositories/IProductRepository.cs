@@ -1,12 +1,13 @@
 ﻿using System;
 using GraphQLTest.Entities;
+using GraphQLTest.Models;
 
 namespace GraphQLTest.Repositories
 {
     public interface IProductRepository
     {
-        List<Product> GetAll();
-        Task<Product> Create(Product product);
+        List<ProductModel> GetAll();
+        Task<ProductModel> Create(ProductModel product);
     }
 }
 
