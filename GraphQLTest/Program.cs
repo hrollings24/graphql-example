@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GraphQLTest;
+using GraphQLTest.DataLoaders;
 using GraphQLTest.Repositories;
 using GraphQLTest.Resolvers;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ builder.Services.AddPooledDbContextFactory<MyDatabaseContext>(o => o.UseNpgsql(b
 builder.Services
     .AddScoped<IProductRepository, ProductRepository>()
     .AddScoped<IExtendedPropertyRepository, ExtendedPropertyRepository>()
+    .AddScoped<ExtendedPropertyDataLoader>()
     .AddGraphQLServer()
     .AddQueryType<Query>()
     .AddMutationType<Mutation>();

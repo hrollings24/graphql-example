@@ -22,11 +22,7 @@ namespace GraphQLTest.Resolvers
         public ProductModel GetProductById(Guid id) =>
             _productRepository.GetAll().FirstOrDefault(x => x.Id == id);
 
-        public List<ExtendedPropertyModel> GetExtendedProperties(Guid id) =>
-            _extendedPropertyRepository.GetAll(id);
-
-        public ExtendedPropertyModel GetExtendedPropertiesById(Guid productId, Guid id) =>
-            _extendedPropertyRepository.GetAll(productId).FirstOrDefault(x => x.Id == id);
     }
 }
 
+ 

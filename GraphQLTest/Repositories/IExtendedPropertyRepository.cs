@@ -6,6 +6,7 @@ namespace GraphQLTest.Repositories
     public interface IExtendedPropertyRepository
     {
         Task<ExtendedPropertyModel> Create(ExtendedPropertyModel exp);
-        List<ExtendedPropertyModel> GetAll(Guid productId);
+        Task<List<ExtendedPropertyModel>> GetByProductId(Guid productId);
+        Task<List<ExtendedPropertyModel>> GetByProductIds(IReadOnlyList<Guid> productIds);
     }
 }

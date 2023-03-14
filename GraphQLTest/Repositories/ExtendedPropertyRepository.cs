@@ -17,11 +17,19 @@ namespace GraphQLTest.Repositories
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public List<ExtendedPropertyModel> GetAll(Guid productId)
+        public async Task<List<ExtendedPropertyModel>> GetByProductId(Guid productId)
         {
             using MyDatabaseContext context = _contextFactory.CreateDbContext();
 
-            var eps = context.ExtendedProperties.Where(x => x.ProductId == productId).ToList();
+            var eps = await context.ExtendedProperties.Where(x => x.ProductId == productId).ToListAsync();
+            return _mapper.Map<List<ExtendedPropertyModel>>(eps);
+        }
+
+        public async Task<List<ExtendedPropertyModel>> GetByProductIds(IReadOnlyList<Guid> productIds)
+        {
+            using MyDatabaseContext context = _contextFactory.CreateDbContext();
+
+            var eps = await context.ExtendedProperties.Where(x => productIds.Contains(x.ProductId)).ToListAsync();
             return _mapper.Map<List<ExtendedPropertyModel>>(eps);
         }
 

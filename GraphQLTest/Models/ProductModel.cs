@@ -1,6 +1,8 @@
 ﻿using System;
 using GraphQLTest.Entities;
 using System.ComponentModel.DataAnnotations;
+using GraphQLTest.Repositories;
+using GraphQLTest.DataLoaders;
 
 namespace GraphQLTest.Models
 {
@@ -18,7 +20,18 @@ namespace GraphQLTest.Models
         [Required]
         public decimal Price { get; set; }
 
-        public virtual ICollection<ExtendedProperties> ExtendedProperties { get; set; }
+        public async Task<List<ExtendedPropertyModel>> ExtendedProperties([Service] ExtendedPropertyDataLoader dataLoader)
+        {
+            var f = await dataLoader.LoadAsync(Id, CancellationToken.None);
+
+            if (f == null)
+            {
+                return new List<ExtendedPropertyModel>();
+            }
+
+            return f;
+        }
+
     }
 }
 
