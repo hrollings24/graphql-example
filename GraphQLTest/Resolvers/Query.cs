@@ -21,6 +21,7 @@ namespace GraphQLTest.Resolvers
 
         [UseDbContext(typeof(MyDatabaseContext))]
         [UsePaging(IncludeTotalCount = true, DefaultPageSize = 10)]
+        [UseProjection]
         [UseFiltering(typeof(ProductFilter))]
         [UseSorting(typeof(ProductSort))]
         public IQueryable<ProductModel> GetPaginatedProducts([ScopedService] MyDatabaseContext context)

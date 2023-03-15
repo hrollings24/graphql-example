@@ -8,7 +8,7 @@ namespace GraphQLTest.Models
 {
 	public class ProductModel
 	{
-        [Key]
+        [IsProjected(true)]
         public Guid Id { get; set; }
 
         [Required]
